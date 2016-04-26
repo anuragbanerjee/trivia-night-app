@@ -7,14 +7,14 @@ default: &default
 development:
   <<: *default
   database: trivia_night_development
-  username: trivia_night
-  password: password1
+  username: rails
+  password: ruby
 
 test:
   <<: *default
   database: trivia_night_test
-  username: trivia_night
-  password: password1
+  username: rails
+  password: ruby
 
 production:
   <<: *default
