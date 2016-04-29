@@ -1,1 +1,54 @@
-Hello World
+<% Team.all.each do |team| %>
+  Team: <%= team.name %><br>
+  Score: <%= Message.where(phone_number: team.phone_number).map {|x| x.score || 0 }.reduce {|x, y| x + y} %>
+  <br><br>
+<% end %>
+
+<br>
+<br>
+<br>
+
+<style type="text/css">
+div {
+  padding: 20px;
+  margin: 20px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+a {
+  width: 50%;
+}
+
+.correct {
+  background: #4CAF50;
+}
+
+.incorrect {
+  background: #ef5350;
+}
+
+</style>
+
+<% Message.all.order('id DESC').each do |x| %>
+  <div class="<% if x.score == nil %>
+  <% elsif x.score < 1 %>
+  incorrect
+  <% else %>
+  correct
+  <% end %>">
+    <br><% if Team.find_by(phone_number: x.phone_number) != nil %>
+      <%= Team.find_by(phone_number: x.phone_number).name %>
+    <% else %>
+      <%= x.phone_number %>
+    <% end %></b>:
+    <%= x.content %>
+    <br>
+    <a href="correct/?message=<%= x.id %>">mark as correct</a>
+    <a href="incorrect/?message=<%= x.id %>">mark as incorrect</a>
+    <br>
+    <a href="triple-incorrect/?message=<%= x.id %>">triple incorrect</a>
+    <a href="triple-correct/?message=<%= x.id %>">triple correct</a>
+    <br>
+  </div>
+<% end %>

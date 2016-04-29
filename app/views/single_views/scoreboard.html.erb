@@ -1,0 +1,17 @@
+<style type="text/css">
+
+* {
+  font-size: 42px;
+}
+
+</style>
+
+<% Team.all.each do |team| %>
+  Team: <%= team.name %><br>
+  Score: <%= Message.where(phone_number: team.phone_number).map {|x| x.score || 0 }.reduce {|x, y| x + y} %>
+  <br><br>
+<% end %>
+
+<br>
+<br>
+<br>
